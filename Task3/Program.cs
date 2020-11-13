@@ -36,8 +36,6 @@ namespace Task3
                 AgeSorting(students);
 
                 AgeAndCourseSorting(students);
-
-
             }
             catch (StudentsCountException ex)
             {
@@ -54,16 +52,16 @@ namespace Task3
             Console.WriteLine("\nг)Сортировка по курсу и возрасту студента:");
             ((List<Student>)students).Sort(delegate (Student st1, Student st2)
             {
-                if (st1.Age < st2.Age)
-                    return 1;
-
-                if (st1.Age > st2.Age)
-                    return -1;
-
                 if (st1.Course < st2.Course)
                     return 1;
 
                 if (st1.Course > st2.Course)
+                    return -1;
+
+                if (st1.Age < st2.Age)
+                    return 1;
+
+                if (st1.Age > st2.Age)
                     return -1;
 
                 return 0;
@@ -89,15 +87,17 @@ namespace Task3
 
         private static void PrintCountOnCourses56(IList<Student> students)
         {
-            int countOfStudents = 0;
-            foreach (Student student in students)
+            IList<Student> course56 = ((List<Student>)students).FindAll(
+                delegate (Student student)
             {
                 if (5 == student.Course || 6 == student.Course)
-                    ++countOfStudents;
-            }
+                    return true;
+                return false;
+            });
+
             Console.WriteLine(
                 "\nа)Количество студентов, которые участся на 5 и 6 курсах: {0}",
-                countOfStudents);
+                course56.Count);
         }
 
         private static void PrintFreq(IList<Student> students)
